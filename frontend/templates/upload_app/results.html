@@ -1,0 +1,65 @@
+{% extends 'upload_app/base.html' %}
+
+{% block title %}Resultados - {{ filename }} | NSL-KDD{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="app-header">
+        <h1>📊 Resultados Procesados</h1>
+        <p class="subtitle">Archivo: <code>{{ filename }}</code></p>
+    </header>
+
+    <main class="main-content">
+        <div class="results-header">
+            <div class="stats-card">
+                <div class="stat">
+                    <span class="stat-number">{{ total_records }}</span>
+                    <span class="stat-label">Registros</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">{{ sample_percentage }}%</span>
+                    <span class="stat-label">Muestra</span>
+                </div>
+                {% if original_size_mb %}
+                <div class="stat">
+                    <span class="stat-number">{{ original_size_mb }}</span>
+                    <span class="stat-label">MB</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <a href="{% url 'index' %}" class="back-btn">
+                ← Nuevo Procesamiento
+            </a>
+        </div>
+
+        {% if efficiency_note %}
+        <div class="efficiency-note">
+            ⚡ {{ efficiency_note }}
+        </div>
+        {% endif %}
+
+        <div class="data-results">
+            <div class="results-card">
+                <h3>Muestra Aleatoria Procesada</h3>
+                <div class="data-preview" id="dataPreview">
+                    {% for line in data %}
+                    <div class="data-line">
+                        <span class="line-number">{{ forloop.counter }}</span>
+                        <code class="line-content">{{ line }}</code>
+                    </div>
+                    {% empty %}
+                    <div class="no-data">
+                        No se encontraron datos procesables en el archivo.
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>Procesamiento completado </p>
+    </footer>
+</div>
+{% endblock %}

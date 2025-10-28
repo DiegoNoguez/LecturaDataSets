@@ -1,0 +1,60 @@
+{% extends 'upload_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <header class="app-header">
+        <h1> DataSets Processor</h1>
+        <p class="subtitle">Procesamiento inteligente de datasets .txt y .arff</p>
+    </header>
+
+    <main class="main-content">
+        {% if error %}
+        <div class="error-message">
+            <span class="error-icon">⚠️</span>
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <div class="upload-section">
+            <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+                {% csrf_token %}
+                
+                <div class="file-input-wrapper">
+                    <input type="file" id="datasetFile" name="dataset_file" 
+                           accept=".txt,.arff" required class="file-input">
+                    <label for="datasetFile" class="file-label">
+                        <span class="file-icon">📁</span>
+                        <span class="file-text">Seleccionar archivo</span>
+                    </label>
+                    <div class="file-info" id="fileInfo">
+                        No se ha seleccionado ningún archivo
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-icon">⚡</span>
+                        Procesar Muestra (5%)
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="info-section">
+            <div class="info-card">
+                <h3>Especificaciones Técnicas</h3>
+                <ul class="specs-list">
+                    <li>✅ <strong>Formatos:</strong> .txt y .arff</li>
+                    <li>✅ <strong>Muestreo:</strong> 5% aleatorio del dataset</li>
+                    <li>✅ <strong>Seguridad:</strong> Procesamiento temporal</li>
+                    <li>✅ <strong>Optimizado:</strong> Para archivos grandes</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>NSL-KDD Dataset Processor </p>
+    </footer>
+</div>
+{% endblock %}
